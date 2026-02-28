@@ -94,8 +94,28 @@ const validateUserQuery = async (req, res) => {
   }
 };
 
+const executePlaygroundQuery = async (req, res) => {
+  try {
+    const { query } = req.body;
+    
+    // Execute query against the learning_playground schema
+    const result = await executeQuery('learning_playground', query);
+
+    res.json({
+      success: result.success,
+      data: result.data,
+      rowCount: result.rowCount,
+      executionTime: result.executionTime,
+      error: result.error,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Query execution failed' });
+  }
+};
+
 module.exports = {
   executeUserQuery,
   getHint,
   validateUserQuery,
+  executePlaygroundQuery,
 };

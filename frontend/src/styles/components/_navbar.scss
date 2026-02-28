@@ -31,6 +31,12 @@
     align-items: center;
   }
 
+  &__links {
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
+  }
+
   &__link {
     color: $text-primary;
     font-weight: 500;

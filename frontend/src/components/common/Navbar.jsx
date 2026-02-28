@@ -15,6 +15,14 @@ const Navbar = () => {
         <div className="navbar__nav">
           {user && (
             <>
+              <div className="navbar__links">
+                <Link to="/assignments" className="navbar__link">
+                  Assignments
+                </Link>
+                <Link to="/learn" className="navbar__link">
+                  Learn SQL
+                </Link>
+              </div>
               <div className="navbar__user">
                 <span className="navbar__username">{user.name}</span>
                 <Button size="small" variant="secondary" onClick={logout}>

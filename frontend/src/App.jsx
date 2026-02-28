@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import AssignmentListPage from './pages/AssignmentListPage';
 import AssignmentAttemptPage from './pages/AssignmentAttemptPage';
+import LearnPage from './pages/LearnPage';
 import './styles/main.scss';
 
 const PrivateRoute = ({ children }) => {
@@ -61,6 +62,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <AssignmentAttemptPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/learn"
+        element={
+          <PrivateRoute>
+            <LearnPage />
           </PrivateRoute>
         }
       />
