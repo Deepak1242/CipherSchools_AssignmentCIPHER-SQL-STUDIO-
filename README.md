@@ -46,15 +46,11 @@ npm install
 Create a `.env` file in the backend folder:
 
 ```
-PORT=5000
+PORT=5001
 NODE_ENV=development
 
 MONGODB_URI=your_mongodb_connection_string
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=your_postgres_username
-POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DB=cipher_sql_studio
+DATABASE_URL=your_postgresql_connection_string
 
 JWT_SECRET=your_random_secret_key_here
 JWT_EXPIRES_IN=7d
@@ -78,7 +74,7 @@ Start the backend server:
 npm run dev
 ```
 
-The server will run on `http://localhost:5000`
+The server will run on `http://localhost:5001`
 
 ### 2. Frontend Setup
 
@@ -90,7 +86,7 @@ npm install
 Create a `.env` file in the frontend folder:
 
 ```
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=http://localhost:5001/api
 ```
 
 Start the frontend:
@@ -155,18 +151,26 @@ CipherSQLStudio/
 
 **Backend won't start:**
 - Check if MongoDB connection string is correct
-- Verify PostgreSQL is running and credentials are correct
-- Make sure port 5000 is not already in use
+- Verify PostgreSQL connection string is correct (use DATABASE_URL format)
+- Make sure port 5001 is not already in use
+- Check all required environment variables are set in `.env`
 
 **Frontend can't connect to backend:**
-- Confirm backend is running on port 5000
-- Check `.env` file has correct API URL
+- Confirm backend is running on port 5001
+- Check `.env` file has correct API URL (http://localhost:5001/api)
 - Look for CORS errors in browser console
 
 **Seed script fails:**
 - Ensure PostgreSQL database exists (create it if needed: `createdb cipher_sql_studio`)
 - Check PostgreSQL user has permission to create schemas
 - Verify MongoDB connection before running assignment seed
+
+**Hint button shows fallback hints:**
+- The app includes intelligent fallback hints that work even without Gemini API
+- If you see "(AI hint service temporarily unavailable)", your Gemini API key may have exceeded quota
+- Generate a new free API key at https://aistudio.google.com/apikey
+- Update `GEMINI_API_KEY` in backend `.env` and restart server
+- Fallback hints are still helpful and functional for learning!
 
 ## Getting API Keys
 
@@ -185,8 +189,10 @@ CipherSQLStudio/
 
 ## Development Notes
 
-- Backend runs on port 5000
+- Backend runs on port 5001 (changed from 5000 due to Chrome's unsafe port restriction on 6000)
 - Frontend runs on port 3000
 - Query execution timeout: 5 seconds
 - Maximum result rows: 1000
 - Rate limits: 10 queries/min, 5 hints/min per user
+- Gemini model: gemini-2.0-flash (latest stable version)
+- Fallback hints available if Gemini API quota exceeded
