@@ -25,8 +25,11 @@ app.use(helmet());
 
 const allowedOrigins = [
   'http://localhost:3000',
+  'https://sql-academy-lhh1acujr-demoncommander12-1854s-projects.vercel.app',
+  'https://sql-academy-demoncommander12-1854s-projects.vercel.app',
   'https://frontend-6snad6oq7-demoncommander12-1854s-projects.vercel.app',
   'https://frontend-demoncommander12-1854s-projects.vercel.app',
+  'https://frontend-fhfiigo1e-demoncommander12-1854s-projects.vercel.app',
 ];
 
 app.use(cors({

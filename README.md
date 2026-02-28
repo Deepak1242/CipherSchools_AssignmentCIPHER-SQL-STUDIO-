@@ -4,8 +4,7 @@ Hey! This is CipherSQLStudio, a web app I built to help people practice SQL quer
 
 ## 🌐 Live Demo
 
-- **Frontend:** https://frontend-fhfiigo1e-demoncommander12-1854s-projects.vercel.app
-- **Backend API:** https://backend-pt7t0fzvk-demoncommander12-1854s-projects.vercel.app
+- **Application:** https://sql-academy-lhh1acujr-demoncommander12-1854s-projects.vercel.app
 - **GitHub Repo:** https://github.com/Deepak1242/sql_academy
 
 ## What's in it?
