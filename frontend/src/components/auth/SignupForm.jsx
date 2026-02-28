@@ -37,7 +37,12 @@ const SignupForm = () => {
       await signup(formData.name, formData.email, formData.password);
       navigate('/assignments');
     } catch (err) {
-      setError(err.response?.data?.error || 'Signup failed. Please try again.');
+      console.error('Signup form error:', err);
+      const errorMessage = err.response?.data?.error || 
+                          err.response?.data?.message || 
+                          err.message || 
+                          'Signup failed. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

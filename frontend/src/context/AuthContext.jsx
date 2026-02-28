@@ -36,12 +36,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signup = async (name, email, password) => {
-    const response = await authAPI.signup({ name, email, password });
-    const { token, user } = response.data;
-    localStorage.setItem('token', token);
-    setToken(token);
-    setUser(user);
-    return response.data;
+    try {
+      console.log('Attempting signup with:', { name, email });
+      const response = await authAPI.signup({ name, email, password });
+      console.log('Signup response:', response.data);
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      setToken(token);
+      setUser(user);
+      return response.data;
+    } catch (error) {
+      console.error('Signup error:', error.response?.data || error.message);
+      throw error;
+    }
   };
 
   const logout = () => {
