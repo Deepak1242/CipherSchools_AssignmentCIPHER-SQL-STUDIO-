@@ -395,7 +395,7 @@
   }
 
   &__button {
-    @include button-primary;
+    @include button;
     padding: $spacing-sm $spacing-lg;
   }
 }
