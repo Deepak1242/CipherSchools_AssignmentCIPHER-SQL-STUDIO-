@@ -2,6 +2,12 @@
 
 Hey! This is CipherSQLStudio, a web app I built to help people practice SQL queries. It's basically a sandbox where you can write SQL, execute it in real-time, and even get some AI-generated hints if you're stuck on a problem.
 
+## 🌐 Live Demo
+
+- **Frontend:** https://frontend-6snad6oq7-demoncommander12-1854s-projects.vercel.app
+- **Backend API:** https://backend-imlshxmxx-demoncommander12-1854s-projects.vercel.app
+- **GitHub Repo:** https://github.com/Deepak1242/sql_academy
+
 ## What's in it?
 - A dashboard to pick SQL problems based on difficulty.
 - An interactive code editor that highlights your SQL syntax (built with Monaco Editor).
