@@ -29,7 +29,11 @@ const signup = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: 'Server error during signup' });
+    console.error('Signup error:', error);
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'Email already registered' });
+    }
+    res.status(500).json({ error: 'Server error during signup. Please try again.' });
   }
 };
 
@@ -63,7 +67,8 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: 'Server error during login' });
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Server error during login. Please try again.' });
   }
 };
 
