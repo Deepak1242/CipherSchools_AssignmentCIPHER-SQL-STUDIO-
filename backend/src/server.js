@@ -12,6 +12,15 @@ const attemptRoutes = require('./routes/attempts');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Connect to MongoDB once
+let mongoConnected = false;
+const ensureMongoConnection = async () => {
+  if (!mongoConnected) {
+    await connectMongoDB();
+    mongoConnected = true;
+  }
+};
+
 app.use(helmet());
 
 const allowedOrigins = [
@@ -33,6 +42,17 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to ensure MongoDB connection
+app.use(async (req, res, next) => {
+  try {
+    await ensureMongoConnection();
+    next();
+  } catch (error) {
+    console.error('Database connection error:', error);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/assignments', assignmentRoutes);
