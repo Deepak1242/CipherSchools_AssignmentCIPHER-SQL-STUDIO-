@@ -20,6 +20,9 @@ const AssignmentAttemptPage = () => {
   const [showHint, setShowHint] = useState(false);
   const [hint, setHint] = useState('');
   const [loadingHint, setLoadingHint] = useState(false);
+  const [checking, setChecking] = useState(false);
+  const [validationResult, setValidationResult] = useState(null);
+  const [showValidation, setShowValidation] = useState(false);
 
   useEffect(() => {
     const fetchAssignment = async () => {
@@ -86,6 +89,32 @@ const AssignmentAttemptPage = () => {
     }
   };
 
+  const handleCheckAnswer = async () => {
+    if (!query.trim()) return;
+
+    setChecking(true);
+    setValidationResult(null);
+
+    try {
+      const response = await queryAPI.validate({
+        assignmentId: id,
+        query: query,
+      });
+
+      setValidationResult(response.data);
+      setShowValidation(true);
+    } catch (err) {
+      setValidationResult({
+        success: false,
+        error: err.response?.data?.error || 'Validation failed',
+        isCorrect: false,
+      });
+      setShowValidation(true);
+    } finally {
+      setChecking(false);
+    }
+  };
+
   if (loading) {
     return (
       <>
@@ -119,7 +148,9 @@ const AssignmentAttemptPage = () => {
               onChange={(value) => setQuery(value || '')}
               onExecute={handleExecuteQuery}
               onGetHint={handleGetHint}
+              onCheckAnswer={handleCheckAnswer}
               loading={executing}
+              checking={checking}
             />
           </div>
           <div className="assignment-attempt__results-section">
@@ -142,6 +173,39 @@ const AssignmentAttemptPage = () => {
             ) : (
               <div className="hint-modal__body">{hint}</div>
             )}
+          </div>
+        </div>
+      )}
+
+      {showValidation && validationResult && (
+        <div className="validation-modal" onClick={() => setShowValidation(false)}>
+          <div className="validation-modal__content" onClick={(e) => e.stopPropagation()}>
+            <div className={`validation-modal__header ${validationResult.isCorrect ? 'validation-modal__header--success' : 'validation-modal__header--error'}`}>
+              <h3>{validationResult.isCorrect ? '✓ Correct!' : '✗ Not Quite Right'}</h3>
+              <button className="validation-modal__close" onClick={() => setShowValidation(false)}>
+                ×
+              </button>
+            </div>
+            <div className="validation-modal__body">
+              {validationResult.success ? (
+                <>
+                  <p className="validation-modal__feedback">{validationResult.feedback}</p>
+                  {!validationResult.isCorrect && (
+                    <div className="validation-modal__details">
+                      <p><strong>Your result:</strong> {validationResult.userRowCount} rows</p>
+                      <p><strong>Expected result:</strong> {validationResult.expectedRowCount} rows</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="validation-modal__error">{validationResult.error}</p>
+              )}
+            </div>
+            <div className="validation-modal__footer">
+              <button className="validation-modal__button" onClick={() => setShowValidation(false)}>
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

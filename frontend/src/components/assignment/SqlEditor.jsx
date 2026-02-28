@@ -2,7 +2,7 @@ import React from 'react';
 import Editor from '@monaco-editor/react';
 import Button from '../common/Button';
 
-const SqlEditor = ({ value, onChange, onExecute, onGetHint, loading }) => {
+const SqlEditor = ({ value, onChange, onExecute, onGetHint, onCheckAnswer, loading, checking }) => {
   return (
     <div className="sql-editor">
       <div className="sql-editor__header">
@@ -12,14 +12,22 @@ const SqlEditor = ({ value, onChange, onExecute, onGetHint, loading }) => {
             size="small" 
             variant="secondary" 
             onClick={onGetHint}
-            disabled={loading}
+            disabled={loading || checking}
           >
             Get Hint
           </Button>
           <Button 
             size="small" 
+            variant="secondary"
+            onClick={onCheckAnswer}
+            disabled={loading || checking || !value.trim()}
+          >
+            {checking ? 'Checking...' : 'Check Answer'}
+          </Button>
+          <Button 
+            size="small" 
             onClick={onExecute}
-            disabled={loading || !value.trim()}
+            disabled={loading || checking || !value.trim()}
           >
             {loading ? 'Running...' : 'Execute Query'}
           </Button>

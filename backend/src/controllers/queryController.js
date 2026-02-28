@@ -2,6 +2,7 @@ const Assignment = require('../models/Assignment');
 const Attempt = require('../models/Attempt');
 const { executeQuery } = require('../services/queryExecutor');
 const { generateHint } = require('../services/hintGenerator');
+const { validateQuery } = require('../services/queryValidator');
 
 const executeUserQuery = async (req, res) => {
   try {
@@ -68,7 +69,33 @@ const getHint = async (req, res) => {
   }
 };
 
+const validateUserQuery = async (req, res) => {
+  try {
+    const { assignmentId, query } = req.body;
+
+    const assignment = await Assignment.findById(assignmentId);
+    if (!assignment) {
+      return res.status(404).json({ error: 'Assignment not found' });
+    }
+
+    if (!assignment.expectedQuery) {
+      return res.status(400).json({ error: 'No expected solution available for this assignment' });
+    }
+
+    const validationResult = await validateQuery(
+      assignment.schemaName,
+      query,
+      assignment.expectedQuery
+    );
+
+    res.json(validationResult);
+  } catch (error) {
+    res.status(500).json({ error: 'Validation failed' });
+  }
+};
+
 module.exports = {
   executeUserQuery,
   getHint,
+  validateUserQuery,
 };

@@ -49,6 +49,7 @@ export const assignmentAPI = {
 export const queryAPI = {
   execute: (data) => api.post('/query/execute', data),
   getHint: (data) => api.post('/query/hint', data),
+  validate: (data) => api.post('/query/validate', data),
 };
 
 export const attemptAPI = {

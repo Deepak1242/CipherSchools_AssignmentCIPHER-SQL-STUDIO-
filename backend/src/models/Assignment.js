@@ -29,6 +29,9 @@ const assignmentSchema = new mongoose.Schema({
   expectedOutput: {
     type: String,
   },
+  expectedQuery: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

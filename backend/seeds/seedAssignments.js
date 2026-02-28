@@ -11,6 +11,7 @@ const assignments = [
     schemaName: 'assignment_1',
     tableNames: ['customers'],
     expectedOutput: 'List of customers with name, email, and join_date where year is 2024',
+    expectedQuery: "SELECT name, email, join_date FROM customers WHERE EXTRACT(YEAR FROM join_date) = 2024",
   },
   {
     title: 'WHERE Clause Filtering',
@@ -20,6 +21,7 @@ const assignments = [
     schemaName: 'assignment_2',
     tableNames: ['orders'],
     expectedOutput: 'Orders with amount > 100, sorted by amount DESC',
+    expectedQuery: "SELECT * FROM orders WHERE amount > 100 ORDER BY amount DESC",
   },
   {
     title: 'JOIN Operations',
@@ -29,6 +31,7 @@ const assignments = [
     schemaName: 'assignment_3',
     tableNames: ['customers', 'orders'],
     expectedOutput: 'Customer names with their order count using LEFT JOIN',
+    expectedQuery: "SELECT c.name, COUNT(o.id) as order_count FROM customers c LEFT JOIN orders o ON c.id = o.customer_id GROUP BY c.id, c.name ORDER BY c.name",
   },
   {
     title: 'Aggregation and GROUP BY',
@@ -38,6 +41,7 @@ const assignments = [
     schemaName: 'assignment_4',
     tableNames: ['sales'],
     expectedOutput: 'Regions with SUM(revenue), ordered by revenue DESC',
+    expectedQuery: "SELECT region, SUM(revenue) as total_revenue FROM sales GROUP BY region ORDER BY total_revenue DESC",
   },
 ];
 
