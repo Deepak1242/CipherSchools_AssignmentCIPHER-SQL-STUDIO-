@@ -3,35 +3,351 @@
 
 .input {
   &__group {
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &--focused {
+      .input__label {
+        color: $primary;
+      }
+    }
   }
 
   &__label {
     display: block;
-    margin-bottom: $spacing-xs;
-    font-weight: 500;
+    margin-bottom: $spacing-sm;
+    font-weight: 600;
     font-size: 14px;
     color: $text-primary;
+    transition: color 0.3s ease;
+    letter-spacing: 0.3px;
+  }
+
+  &__required {
+    color: $error;
+    margin-left: 2px;
+    font-weight: 700;
+  }
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    position: absolute;
+    left: 16px;
+    color: $text-light;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    z-index: 2;
+    transition: color 0.3s ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   &__field {
-    @include input;
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: $font-sans;
+    border: 2px solid $border;
+    border-radius: 12px;
+    background: $white;
+    color: $text-primary;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    appearance: none;
+    
+    &::placeholder {
+      color: $text-light;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      border-color: darken($border, 10%);
+    }
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba($primary, 0.1);
+      background: $white;
+
+      &::placeholder {
+        opacity: 0.8;
+      }
+    }
+
+    &--with-icon {
+      padding-left: 48px;
+    }
+
+    &--error {
+      border-color: $error;
+      background: lighten($error, 48%);
+
+      &:focus {
+        border-color: $error;
+        box-shadow: 0 0 0 4px rgba($error, 0.1);
+      }
+    }
+
+    &--filled {
+      background: lighten($primary, 48%);
+      border-color: lighten($primary, 35%);
+    }
+
+    &--disabled {
+      background: lighten($border, 10%);
+      color: $text-light;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &--focused {
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba($primary, 0.1);
+    }
+  }
+
+  &__toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: $text-light;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    z-index: 2;
+
+    &:hover {
+      color: $primary;
+      background: lighten($primary, 48%);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__success-icon {
+    position: absolute;
+    right: 16px;
+    color: $success;
+    display: flex;
+    align-items: center;
+    animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+
+    svg {
+      filter: drop-shadow(0 2px 4px rgba($success, 0.2));
+    }
   }
 
   &__error {
-    margin-top: $spacing-xs;
+    margin-top: $spacing-sm;
     font-size: 13px;
     color: $error;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    animation: slideDown 0.3s ease, shake 0.4s ease;
+    font-weight: 500;
+
+    svg {
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
   }
 
   &__help {
-    margin-top: $spacing-xs;
+    margin-top: $spacing-sm;
     font-size: 13px;
     color: $text-light;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1.4;
+
+    &::before {
+      content: 'ℹ';
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: lighten($text-light, 30%);
+      color: $white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 10px;
+      line-height: 14px;
+      flex-shrink: 0;
+    }
   }
 }
 
+// Textarea specific styles
 textarea.input__field {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
+  padding: 14px 16px;
+  line-height: 1.6;
+  font-family: $font-sans;
+}
+
+// Select specific styles
+select.input__field {
+  cursor: pointer;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  appearance: none;
+}
+
+// Checkbox and Radio styles
+.input__checkbox,
+.input__radio {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+  user-select: none;
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid $border;
+    border-radius: 4px;
+    background: $white;
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+
+    &:hover {
+      border-color: $primary;
+    }
+
+    &:checked {
+      background: $primary;
+      border-color: $primary;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 2px;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba($primary, 0.1);
+    }
+  }
+
+  input[type='radio'] {
+    border-radius: 50%;
+
+    &:checked::after {
+      border-radius: 50%;
+    }
+  }
+
+  label {
+    margin: 0;
+    cursor: pointer;
+    font-size: 14px;
+  }
+}
+
+// File input styles
+input[type='file'].input__field {
+  padding: 12px;
+  cursor: pointer;
+
+  &::file-selector-button {
+    padding: 8px 16px;
+    background: $primary;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: $spacing-md;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: darken($primary, 10%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Animations
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+// Focus visible for accessibility
+.input__field:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// Responsive
+@media (max-width: $breakpoint-mobile) {
+  .input {
+    &__field {
+      font-size: 16px; // Prevents zoom on iOS
+    }
+  }
 }
