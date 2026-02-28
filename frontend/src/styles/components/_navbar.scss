@@ -1,0 +1,67 @@
+@import '../variables';
+@import '../mixins';
+
+.navbar {
+  background: $background;
+  border-bottom: 1px solid $border;
+  padding: $spacing-md $spacing-lg;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: $shadow-sm;
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary;
+    font-family: $font-mono;
+  }
+
+  &__nav {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+  }
+
+  &__link {
+    color: $text-primary;
+    font-weight: 500;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    transition: background 150ms ease-out;
+
+    &:hover {
+      background: lighten($primary, 45%);
+      color: $primary;
+    }
+
+    &--active {
+      background: $primary;
+      color: white;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__username {
+    font-weight: 500;
+    color: $text-secondary;
+    display: none;
+
+    @include respond-above($tablet) {
+      display: block;
+    }
+  }
+}

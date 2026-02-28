@@ -1,0 +1,35 @@
+@import './base';
+@import './variables';
+@import './mixins';
+
+@import './components/button';
+@import './components/card';
+@import './components/input';
+@import './components/navbar';
+@import './components/table';
+
+@import './pages/auth';
+@import './pages/assignment-list';
+@import './pages/assignment-attempt';
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.loading {
+  @include flex-center;
+  min-height: 300px;
+  color: $text-light;
+  font-size: 18px;
+}
+
+.error-message {
+  padding: $spacing-md;
+  background: lighten($error, 45%);
+  border: 1px solid $error;
+  border-radius: $radius-sm;
+  color: $error;
+  text-align: center;
+}

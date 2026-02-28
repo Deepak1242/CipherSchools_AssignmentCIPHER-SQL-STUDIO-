@@ -1,0 +1,34 @@
+@import '../variables';
+@import '../mixins';
+
+.card {
+  @include card;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  &__body {
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+
+  &__footer {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid $border;
+  }
+}

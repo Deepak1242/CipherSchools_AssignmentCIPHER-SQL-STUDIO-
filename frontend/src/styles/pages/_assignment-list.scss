@@ -1,0 +1,100 @@
+@import '../variables';
+@import '../mixins';
+
+.assignment-list {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+
+  &__header {
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+      color: $text-primary;
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      color: $text-secondary;
+      margin-bottom: 0;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+
+    @include respond-above($tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-above($desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.assignment-card {
+  @include card;
+  cursor: pointer;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-primary;
+    flex: 1;
+  }
+
+  &__badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: $spacing-sm;
+
+    &--easy {
+      background: lighten($success, 40%);
+      color: $success;
+    }
+
+    &--medium {
+      background: lighten($warning, 30%);
+      color: darken($warning, 30%);
+    }
+
+    &--hard {
+      background: lighten($error, 40%);
+      color: $error;
+    }
+  }
+
+  &__description {
+    color: $text-secondary;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+  }
+
+  &__question {
+    background: lighten($primary, 48%);
+    padding: $spacing-md;
+    border-radius: $radius-sm;
+    font-size: 14px;
+    color: $text-primary;
+    border-left: 3px solid $primary;
+  }
+}

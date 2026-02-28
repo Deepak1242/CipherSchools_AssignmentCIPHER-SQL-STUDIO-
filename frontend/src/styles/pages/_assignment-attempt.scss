@@ -1,0 +1,288 @@
+@import '../variables';
+@import '../mixins';
+
+.assignment-attempt {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+
+  @include respond-above($desktop) {
+    grid-template-columns: 350px 1fr;
+  }
+
+  &__sidebar {
+    background: lighten($primary, 48%);
+    border-right: 1px solid $border;
+    overflow-y: auto;
+    padding: $spacing-lg;
+
+    @media (max-width: 1023px) {
+      max-height: 300px;
+      border-right: none;
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid $border;
+    min-height: 300px;
+  }
+
+  &__results-section {
+    flex: 1;
+    overflow: auto;
+    background: $background;
+  }
+}
+
+.question-panel {
+  &__header {
+    margin-bottom: $spacing-md;
+
+    h2 {
+      color: $text-primary;
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: $spacing-md;
+
+    &--easy { background: $success; color: white; }
+    &--medium { background: $warning; color: white; }
+    &--hard { background: $error; color: white; }
+  }
+
+  &__question {
+    background: white;
+    padding: $spacing-md;
+    border-radius: $radius-sm;
+    border-left: 3px solid $primary;
+    margin-bottom: $spacing-lg;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  &__tables {
+    h3 {
+      font-size: 14px;
+      margin-bottom: $spacing-sm;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  &__table-name {
+    font-family: $font-mono;
+    font-size: 13px;
+    padding: $spacing-xs $spacing-sm;
+    background: white;
+    border-radius: $radius-sm;
+    color: $secondary;
+    display: inline-block;
+    margin-right: $spacing-xs;
+    margin-bottom: $spacing-xs;
+  }
+}
+
+.sample-data {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border;
+
+  &__toggle {
+    @include button-secondary;
+    width: 100%;
+    margin-bottom: $spacing-md;
+  }
+
+  &__content {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  &__table-section {
+    margin-bottom: $spacing-lg;
+
+    h4 {
+      font-family: $font-mono;
+      font-size: 14px;
+      color: $secondary;
+      margin-bottom: $spacing-sm;
+    }
+  }
+}
+
+.sql-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+  &__header {
+    background: lighten($secondary, 50%);
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 14px;
+      margin: 0;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__monaco {
+    flex: 1;
+    min-height: 200px;
+  }
+}
+
+.results-panel {
+  padding: $spacing-lg;
+  height: 100%;
+  overflow: auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    h3 {
+      margin: 0;
+      color: $text-primary;
+    }
+  }
+
+  &__meta {
+    font-size: 13px;
+    color: $text-light;
+  }
+
+  &__empty {
+    @include flex-center;
+    flex-direction: column;
+    padding: $spacing-2xl;
+    text-align: center;
+    color: $text-light;
+
+    svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: $spacing-md;
+      opacity: 0.3;
+    }
+  }
+
+  &__error {
+    padding: $spacing-md;
+    background: lighten($error, 45%);
+    border: 1px solid $error;
+    border-radius: $radius-sm;
+    color: $error;
+    font-family: $font-mono;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  &__success {
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    background: lighten($success, 50%);
+    border: 1px solid $success;
+    border-radius: $radius-sm;
+    color: $success;
+    font-size: 13px;
+  }
+}
+
+.hint-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  z-index: 1000;
+  padding: $spacing-lg;
+
+  &__content {
+    @include card;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    h3 {
+      margin: 0;
+      color: $primary;
+    }
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: $text-light;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  &__body {
+    background: lighten($accent, 45%);
+    padding: $spacing-md;
+    border-radius: $radius-sm;
+    border-left: 3px solid $accent;
+    line-height: 1.7;
+    color: $text-primary;
+  }
+
+  &__loading {
+    @include flex-center;
+    padding: $spacing-xl;
+    color: $text-light;
+  }
+}

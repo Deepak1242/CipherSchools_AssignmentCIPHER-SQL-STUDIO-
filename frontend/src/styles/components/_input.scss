@@ -1,0 +1,37 @@
+@import '../variables';
+@import '../mixins';
+
+.input {
+  &__group {
+    margin-bottom: $spacing-md;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: 500;
+    font-size: 14px;
+    color: $text-primary;
+  }
+
+  &__field {
+    @include input;
+  }
+
+  &__error {
+    margin-top: $spacing-xs;
+    font-size: 13px;
+    color: $error;
+  }
+
+  &__help {
+    margin-top: $spacing-xs;
+    font-size: 13px;
+    color: $text-light;
+  }
+}
+
+textarea.input__field {
+  min-height: 100px;
+  resize: vertical;
+}

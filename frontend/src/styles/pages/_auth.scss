@@ -1,0 +1,61 @@
+@import '../variables';
+@import '../mixins';
+
+.auth-page {
+  min-height: 100vh;
+  @include flex-center;
+  background: linear-gradient(135deg, lighten($primary, 45%) 0%, lighten($secondary, 50%) 100%);
+  padding: $spacing-lg;
+
+  &__container {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  &__card {
+    @include card;
+    padding: $spacing-xl;
+  }
+
+  &__logo {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+      font-size: 2rem;
+      color: $primary;
+      font-family: $font-mono;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      color: $text-secondary;
+      margin-bottom: 0;
+    }
+  }
+
+  &__form {
+    margin-bottom: $spacing-lg;
+  }
+
+  &__footer {
+    text-align: center;
+    padding-top: $spacing-md;
+    border-top: 1px solid $border;
+    color: $text-secondary;
+
+    a {
+      font-weight: 600;
+    }
+  }
+
+  &__error {
+    padding: $spacing-sm $spacing-md;
+    background: lighten($error, 40%);
+    border: 1px solid $error;
+    border-radius: $radius-sm;
+    color: $error;
+    margin-bottom: $spacing-md;
+    font-size: 14px;
+  }
+}

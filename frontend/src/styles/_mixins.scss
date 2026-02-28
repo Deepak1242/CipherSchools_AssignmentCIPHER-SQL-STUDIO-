@@ -1,0 +1,82 @@
+@import './variables';
+
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin card {
+  background: $background;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-sm;
+  transition: all 200ms ease-out;
+}
+
+@mixin button {
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid $primary;
+  border-radius: $radius-sm;
+  background: $primary;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 150ms ease-out;
+  font-family: $font-sans;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@mixin button-secondary {
+  @include button;
+  background: white;
+  color: $primary;
+  border-color: $primary;
+  
+  &:hover {
+    background: lighten($primary, 45%);
+  }
+}
+
+@mixin input {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  font-family: $font-sans;
+  transition: border-color 150ms ease-out;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

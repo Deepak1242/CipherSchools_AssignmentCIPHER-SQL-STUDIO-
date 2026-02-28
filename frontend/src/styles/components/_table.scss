@@ -1,0 +1,56 @@
+@import '../variables';
+@import '../mixins';
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $background;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  &__wrapper {
+    overflow-x: auto;
+    border-radius: $radius-md;
+    box-shadow: $shadow-sm;
+  }
+
+  &__header {
+    background: lighten($primary, 45%);
+  }
+
+  &__head-cell {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: $text-primary;
+    border-bottom: 2px solid $border;
+    white-space: nowrap;
+  }
+
+  &__row {
+    border-bottom: 1px solid $border;
+    transition: background 100ms ease-out;
+
+    &:hover {
+      background: lighten($primary, 48%);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__cell {
+    padding: $spacing-sm $spacing-md;
+    font-size: 14px;
+    color: $text-secondary;
+  }
+
+  &--empty {
+    padding: $spacing-xl;
+    text-align: center;
+    color: $text-light;
+  }
+}
