@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SqlEditor from '../components/assignment/SqlEditor';
 import ResultsTable from '../components/assignment/ResultsTable';
 import Button from '../components/common/Button';
+import Navbar from '../components/common/Navbar';
 import api from '../services/api';
 
 const LearnPage = () => {
@@ -11,6 +12,7 @@ const LearnPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showSampleData, setShowSampleData] = useState(true);
+
 
   const lessons = [
     {
@@ -227,7 +229,7 @@ LEFT JOIN orders o ON e.employee_id = o.employee_id;</code></pre>
 
     try {
       const response = await api.post('/query/playground', { query: editorQuery });
-      
+
       if (response.data.success) {
         setResults(response.data.data);
       } else {
@@ -247,112 +249,115 @@ LEFT JOIN orders o ON e.employee_id = o.employee_id;</code></pre>
   const currentLesson = lessons[activeLesson];
 
   return (
-    <div className="learn-page">
-      <div className="learn-page__container">
-        <div className="learn-page__sidebar">
-          <h2 className="learn-page__sidebar-title">SQL Lessons</h2>
-          <div className="learn-page__lessons">
-            {lessons.map((lesson, index) => (
-              <button
-                key={lesson.id}
-                className={`learn-page__lesson-item ${
-                  activeLesson === index ? 'learn-page__lesson-item--active' : ''
-                }`}
-                onClick={() => setActiveLesson(index)}
-              >
-                <span className="learn-page__lesson-number">{index + 1}</span>
-                <div className="learn-page__lesson-info">
-                  <h3 className="learn-page__lesson-title">{lesson.title}</h3>
-                  <p className="learn-page__lesson-desc">{lesson.description}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="learn-page__content">
-          <div className="learn-page__lesson-content">
-            <h1 className="learn-page__main-title">{currentLesson.title}</h1>
-            <div
-              className="learn-page__lesson-body"
-              dangerouslySetInnerHTML={{ __html: currentLesson.content }}
-            />
-            
-            <div className="learn-page__challenge">
-              <h4 className="learn-page__challenge-title">Challenge</h4>
-              <p className="learn-page__challenge-text">{currentLesson.challenge}</p>
-              <Button onClick={handleTryExample} variant="secondary">
-                Try Example Query
-              </Button>
-            </div>
-          </div>
-
-          <div className="learn-page__playground">
-            <div className="learn-page__playground-header">
-              <h3>Interactive SQL Playground</h3>
-              <button
-                className="learn-page__toggle-data"
-                onClick={() => setShowSampleData(!showSampleData)}
-              >
-                {showSampleData ? 'Hide' : 'Show'} Sample Data
-              </button>
-            </div>
-
-            {showSampleData && (
-              <div className="learn-page__sample-data">
-                <h4>Available Tables</h4>
-                {Object.entries(sampleData).map(([tableName, rows]) => (
-                  <div key={tableName} className="learn-page__table-preview">
-                    <h5>{tableName}</h5>
-                    <div className="learn-page__table-wrapper">
-                      <table className="learn-page__preview-table">
-                        <thead>
-                          <tr>
-                            {Object.keys(rows[0]).map((col) => (
-                              <th key={col}>{col}</th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {rows.slice(0, 3).map((row, idx) => (
-                            <tr key={idx}>
-                              {Object.values(row).map((val, i) => (
-                                <td key={i}>{val}</td>
-                              ))}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <p className="learn-page__table-note">Showing 3 of {rows.length} rows</p>
-                    </div>
+    <div >
+      <Navbar />
+      <div className="learn-page">
+        <div className="learn-page__container">
+          <div className="learn-page__sidebar">
+            <h2 className="learn-page__sidebar-title">SQL Lessons</h2>
+            <div className="learn-page__lessons">
+              {lessons.map((lesson, index) => (
+                <button
+                  key={lesson.id}
+                  className={`learn-page__lesson-item ${activeLesson === index ? 'learn-page__lesson-item--active' : ''
+                    }`}
+                  onClick={() => setActiveLesson(index)}
+                >
+                  <span className="learn-page__lesson-number">{index + 1}</span>
+                  <div className="learn-page__lesson-info">
+                    <h3 className="learn-page__lesson-title">{lesson.title}</h3>
+                    <p className="learn-page__lesson-desc">{lesson.description}</p>
                   </div>
-                ))}
-              </div>
-            )}
+                </button>
+              ))}
+            </div>
+          </div>
 
-            <div className="learn-page__editor-section">
-              <SqlEditor value={editorQuery} onChange={setEditorQuery} />
-              <div className="learn-page__editor-actions">
-                <Button onClick={handleRunQuery} disabled={loading}>
-                  {loading ? 'Running...' : 'Run Query'}
+          <div className="learn-page__content">
+            <div className="learn-page__lesson-content">
+              <h1 className="learn-page__main-title">{currentLesson.title}</h1>
+              <div
+                className="learn-page__lesson-body"
+                dangerouslySetInnerHTML={{ __html: currentLesson.content }}
+              />
+
+              <div className="learn-page__challenge">
+                <h4 className="learn-page__challenge-title">Challenge</h4>
+                <p className="learn-page__challenge-text">{currentLesson.challenge}</p>
+                <Button onClick={handleTryExample} variant="secondary">
+                  Try Example Query
                 </Button>
               </div>
             </div>
 
-            {error && (
-              <div className="learn-page__error">
-                <strong>Error:</strong> {error}
+            <div className="learn-page__playground">
+              <div className="learn-page__playground-header">
+                <h3>Interactive SQL Playground</h3>
+                <button
+                  className="learn-page__toggle-data"
+                  onClick={() => setShowSampleData(!showSampleData)}
+                >
+                  {showSampleData ? 'Hide' : 'Show'} Sample Data
+                </button>
               </div>
-            )}
 
-            {results && (
-              <div className="learn-page__results">
-                <h4>Query Results</h4>
-                <ResultsTable data={results} />
+              {showSampleData && (
+                <div className="learn-page__sample-data">
+                  <h4>Available Tables</h4>
+                  {Object.entries(sampleData).map(([tableName, rows]) => (
+                    <div key={tableName} className="learn-page__table-preview">
+                      <h5>{tableName}</h5>
+                      <div className="learn-page__table-wrapper">
+                        <table className="learn-page__preview-table">
+                          <thead>
+                            <tr>
+                              {Object.keys(rows[0]).map((col) => (
+                                <th key={col}>{col}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {rows.slice(0, 3).map((row, idx) => (
+                              <tr key={idx}>
+                                {Object.values(row).map((val, i) => (
+                                  <td key={i}>{val}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <p className="learn-page__table-note">Showing 3 of {rows.length} rows</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="learn-page__editor-section">
+                <SqlEditor value={editorQuery} onChange={setEditorQuery} />
+                <div className="learn-page__editor-actions">
+                  <Button onClick={handleRunQuery} disabled={loading}>
+                    {loading ? 'Running...' : 'Run Query'}
+                  </Button>
+                </div>
               </div>
-            )}
+
+              {error && (
+                <div className="learn-page__error">
+                  <strong>Error:</strong> {error}
+                </div>
+              )}
+
+              {results && (
+                <div className="learn-page__results">
+                  <h4>Query Results</h4>
+                  <ResultsTable data={results} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
